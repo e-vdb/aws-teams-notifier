@@ -4,10 +4,10 @@ import json
 from abc import ABC, abstractmethod
 from os import getenv
 
-from utils.error_handling import raise_error
-from utils.http_utils import send_to_teams
-from utils.logging import setup_logger
-from utils.template_utils import fetch_card_template, populate_card_template
+from src.utils.error_handling import raise_error
+from src.utils.http_utils import send_to_teams
+from src.utils.logging import setup_logger
+from src.utils.template_utils import fetch_card_template, populate_card_template
 
 logger = setup_logger()
 
