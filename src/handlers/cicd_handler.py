@@ -28,11 +28,11 @@ class CiCdNotificationHandler(BaseHandler):
             raise ValueError("sns_msg required for CI/CD handler")
 
         state = sns_msg["detail"]["state"]
-        template_key: str = TEMPLATE_PATHS.get(state, "")
-        if not template_key:
+        template_key = TEMPLATE_PATHS.get(state)
+        if template_key is None:
             error_msg = f"Unsupported pipeline state: {state}"
             raise_error(exception_type=ValueError, message=error_msg)
-        return fetch_card_template(bucket_name=self.bucket_name, template_key=self.template_key)
+        return fetch_card_template(bucket_name=self.bucket_name, template_key=template_key)
 
     def fill_placeholders(self, sns_msg: dict) -> dict:
         """Fill placeholders for the cicd notification."""
