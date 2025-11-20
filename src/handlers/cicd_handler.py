@@ -3,7 +3,7 @@ from os import getenv
 
 from src.handlers.base_handler import BaseHandler
 from src.utils.error_handling import raise_error
-from src.utils.logging import setup_logger
+from src.utils.logging_config import setup_logger
 from src.utils.template_utils import fetch_card_template
 
 TEMPLATE_PATHS = {
@@ -28,9 +28,8 @@ class CiCdNotificationHandler(BaseHandler):
             raise ValueError("sns_msg required for CI/CD handler")
 
         state = sns_msg["detail"]["state"]
-        template_key = TEMPLATE_PATHS.get(state)
+        template_key: str = TEMPLATE_PATHS.get(state, "")
         if not template_key:
-            logger.error("Unsupported pipeline state: %s", state)
             error_msg = f"Unsupported pipeline state: {state}"
             raise_error(exception_type=ValueError, message=error_msg)
         return fetch_card_template(bucket_name=self.bucket_name, template_key=self.template_key)

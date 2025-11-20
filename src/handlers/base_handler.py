@@ -6,7 +6,7 @@ from os import getenv
 
 from src.utils.error_handling import raise_error
 from src.utils.http_utils import send_to_teams
-from src.utils.logging import setup_logger
+from src.utils.logging_config import setup_logger
 from src.utils.template_utils import fetch_card_template, populate_card_template
 
 logger = setup_logger()

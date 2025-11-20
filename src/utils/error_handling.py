@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from typing import NoReturn
 
-from .logging import setup_logger
+from .logging_config import setup_logger
 
 # Set up logger from the utilities module
 logger = setup_logger()

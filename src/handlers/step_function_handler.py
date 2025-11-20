@@ -5,7 +5,7 @@ from os import getenv
 
 from src.handlers.base_handler import BaseHandler
 from src.utils.error_handling import raise_error
-from src.utils.logging import setup_logger
+from src.utils.logging_config import setup_logger
 from src.utils.template_utils import fetch_card_template
 
 TEMPLATE_PATHS = {
