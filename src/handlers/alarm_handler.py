@@ -3,34 +3,9 @@
 from datetime import UTC, datetime
 from os import getenv
 
+from src.aws_console_url_builders.cloudwatch import CloudWatchURLBuilder
 from src.handlers.base_handler import BaseHandler
-from src.utils.error_handling import raise_error
-
-
-def get_region_from_arn(arn: str) -> str:
-    """Extract the AWS region from an ARN.
-
-    Parameters
-    ----------
-    arn: str
-        The ARN of the resource.
-
-    Returns
-    -------
-    str
-        The region extracted from the ARN.
-
-    Raises
-    ------
-    ValueError
-        If the ARN format is invalid.
-
-    """
-    try:
-        return arn.split(":")[3]
-    except IndexError:
-        error_msg = f"Invalid ARN format: {arn}"
-        raise_error(exception_type=ValueError, message=error_msg)
+from src.utils.arn_utils import get_region_from_arn
 
 
 class AlarmNotificationHandler(BaseHandler):
@@ -53,5 +28,7 @@ class AlarmNotificationHandler(BaseHandler):
             "alarm_state": sns_msg["NewStateValue"],
             "alarm_state_reason": sns_msg["NewStateReason"],
             "timestamp": datetime.now(UTC).strftime("%Y-%m-%d %H:%M:%S %Z"),
-            "alarm_url": f"https://{region}.console.aws.amazon.com/cloudwatch/home?region={region}#alarmsV2:alarm/{sns_msg['AlarmName']}?accountId={sns_msg['AWSAccountId']}&region={region}",
+            "alarm_url": CloudWatchURLBuilder.alarm_url(
+                region=region, alarm_name=sns_msg["AlarmName"], account_id=sns_msg["AWSAccountId"]
+            ),
         }

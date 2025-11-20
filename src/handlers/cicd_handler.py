@@ -1,9 +1,11 @@
+"""CICD notification handler."""
+
 from datetime import UTC, datetime
 from os import getenv
 
+from src.aws_console_url_builders.codepipeline import CodePipelineURLBuilder
 from src.handlers.base_handler import BaseHandler
 from src.utils.error_handling import raise_error
-from src.utils.logging_config import setup_logger
 from src.utils.template_utils import fetch_card_template
 
 TEMPLATE_PATHS = {
@@ -11,8 +13,6 @@ TEMPLATE_PATHS = {
     "FAILED": "notifications/teams/cicd/failure-card.json",
     "STARTED": "notifications/teams/cicd/manual-approval-card.json",
 }
-
-logger = setup_logger()
 
 
 class CiCdNotificationHandler(BaseHandler):
@@ -25,7 +25,8 @@ class CiCdNotificationHandler(BaseHandler):
     def get_card_template(self, sns_msg: dict | None = None) -> dict:
         """Get the template card based on pipeline state."""
         if not sns_msg:
-            raise ValueError("sns_msg required for CI/CD handler")
+            error_msg = "sns_msg required for CI/CD handler"
+            raise_error(exception_type=ValueError, message=error_msg)
 
         state = sns_msg["detail"]["state"]
         template_key = TEMPLATE_PATHS.get(state)
@@ -37,13 +38,20 @@ class CiCdNotificationHandler(BaseHandler):
     def fill_placeholders(self, sns_msg: dict) -> dict:
         """Fill placeholders for the cicd notification."""
         state = sns_msg["detail"]["state"]
+        region = sns_msg["region"]
 
         placeholders = {
             "pipeline_name": sns_msg["detail"]["pipeline"],
             "execution_id": sns_msg["detail"]["execution-id"],
             "timestamp": datetime.now(UTC).strftime("%Y-%m-%d %H:%M:%S %Z"),
-            "pipeline_url": f"https://eu-central-1.console.aws.amazon.com/codesuite/codepipeline/pipelines/{sns_msg['detail']['pipeline']}/view?region=eu-central-1",
-            "execution_url": f"https://eu-central-1.console.aws.amazon.com/codesuite/codepipeline/pipelines/{sns_msg['detail']['pipeline']}/executions/{sns_msg['detail']['execution-id']}/timeline?region=eu-central-1",
+            "pipeline_url": CodePipelineURLBuilder.codepipeline_url(
+                region=region, pipeline_name=sns_msg["detail"]["pipeline"]
+            ),
+            "execution_url": CodePipelineURLBuilder.codepipeline_execution_url(
+                region=region,
+                pipeline_name=sns_msg["detail"]["pipeline"],
+                execution_id=sns_msg["detail"]["execution-id"],
+            ),
         }
 
         # Add failed stage if state is FAILED
