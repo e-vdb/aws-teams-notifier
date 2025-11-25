@@ -1,0 +1,81 @@
+{
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "type": "AdaptiveCard",
+  "version": "1.2",
+  "body": [
+    {
+      "type": "Container",
+      "items": [
+        {
+          "type": "TextBlock",
+          "text": "🎉 CI/CD Pipeline Succeeded!",
+          "weight": "Bolder",
+          "size": "Large"
+        },
+        {
+          "type": "ColumnSet",
+          "columns": [
+            {
+              "type": "Column",
+              "width": "auto",
+              "items": [
+                {
+                  "type": "Image",
+                  "url": "shared-assets/logos/aws-logo.png",
+                  "altText": "AWS Logo",
+                  "size": "small",
+                  "style": "company"
+                }
+              ]
+            },
+            {
+              "type": "Column",
+              "width": "stretch",
+              "items": [
+                {
+                  "type": "TextBlock",
+                  "text": "AWS CodePipeline",
+                  "weight": "bolder",
+                  "wrap": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "FactSet",
+          "facts": [
+            {
+              "title": "Pipeline:",
+              "value": "{{pipeline_name}}"
+            },
+            {
+              "title": "Execution ID:",
+              "value": "{{execution_id}}"
+            },
+            {
+              "title": "Timestamp:",
+              "value": "{{timestamp}}"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "actions": [
+    {
+      "type": "Action.OpenUrl",
+      "title": "View Pipeline",
+      "url": "{{pipeline_url}}"
+    },
+    {
+      "type": "Action.OpenUrl",
+      "title": "View Execution",
+      "url": "{{execution_url}}"
+    }
+  ],
+  "backgroundImage": {
+    "url": "shared-assets/solid_backgrounds/950x350-green-pigment-solid-color-background.jpg",
+    "fillMode": "Repeat"
+  }
+}

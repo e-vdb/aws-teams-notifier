@@ -1,0 +1,83 @@
+{
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "type": "AdaptiveCard",
+  "version": "1.2",
+  "body": [
+    {
+      "type": "Container",
+      "items": [
+        {
+          "type": "TextBlock",
+          "text": "🚨 **ALERT TRIGGERED** 🚨",
+          "weight": "Bolder",
+          "size": "Large"
+        },
+        {
+          "type": "ColumnSet",
+          "columns": [
+            {
+              "type": "Column",
+              "width": "auto",
+              "items": [
+                {
+                  "type": "Image",
+                  "url": "shared-assets/logo/AWS_logo.jpg",
+                  "altText": "AWS Logo",
+                  "size": "small",
+                  "style": "company"
+                }
+              ]
+            },
+            {
+              "type": "Column",
+              "width": "stretch",
+              "items": [
+                {
+                  "type": "TextBlock",
+                  "text": "AWS CloudWatch",
+                  "weight": "bolder",
+                  "wrap": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "FactSet",
+          "facts": [
+            {
+              "title": "Alarm:",
+              "value": "{{alarm_name}}"
+            },
+            {
+              "title": "Alarm Description:",
+              "value": "{{alarm_description}}"
+            },
+            {
+              "title": "State:",
+              "value": "{{alarm_state}}"
+            },
+            {
+              "title": "Timestamp:",
+              "value": "{{timestamp}}"
+            }
+          ]
+        },
+        {
+                        "type": "TextBlock",
+                        "text": "{{alarm_state_reason}}",
+                        "wrap": true
+                    }
+      ]
+    }
+  ],
+  "actions": [
+    {"type": "Action.OpenUrl", "title": "View Alarm",
+      "url": "{{alarm_url}}"
+                        }
+  ],
+  "backgroundImage": {
+    "url": "shared-assets/solid_backgrounds/950x350-boston-university-red-solid-color-background.jpg",
+    "fillMode": "Repeat"
+  }
+}

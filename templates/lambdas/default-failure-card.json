@@ -1,0 +1,90 @@
+{
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "type": "AdaptiveCard",
+  "version": "1.2",
+  "body": [
+    {
+      "type": "Container",
+      "items": [
+        {
+          "type": "TextBlock",
+          "text": "❌ Lambda Execution Failed",
+          "weight": "Bolder",
+          "size": "Large"
+        },
+        {
+          "type": "ColumnSet",
+          "columns": [
+            {
+              "type": "Column",
+              "width": "auto",
+              "items": [
+                {
+                  "type": "Image",
+                  "url": "shared-assets/logos/aws-logo.png",
+                  "altText": "AWS Logo",
+                  "size": "small",
+                  "style": "company"
+                }
+              ]
+            },
+            {
+              "type": "Column",
+              "width": "stretch",
+              "items": [
+                {
+                  "type": "TextBlock",
+                  "text": "AWS Lambda",
+                  "weight": "bolder",
+                  "wrap": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "FactSet",
+          "facts": [
+            {
+              "title": "Lambda:",
+              "value": "{{lambda_name}}"
+            },
+            {
+              "title": "Error Type:",
+              "value": "{{error_type}}"
+            },
+            {
+              "title": "Error Message:",
+              "value": "{{error_message}}"
+            },
+            {
+              "title": "Timestamp:",
+              "value": "{{timestamp}}"
+            }
+          ]
+        },
+        {
+          "type": "TextBlock",
+          "text": "{{stack_trace}}",
+          "wrap": true
+        }
+      ]
+    }
+  ],
+  "actions": [
+    {
+      "type": "Action.OpenUrl",
+      "title": "View in Console",
+      "url": "{{execution_url}}"
+    },
+    {
+    "type": "Action.OpenUrl",
+    "title": "View Logs in CloudWatch",
+    "url": "{{cloudwatch_url}}"
+}
+  ],
+    "backgroundImage": {
+    "url": "shared-assets/solid_backgrounds/950x350-boston-university-red-solid-color-background.jpg",
+    "fillMode": "Repeat"
+  }
+}

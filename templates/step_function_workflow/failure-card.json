@@ -1,0 +1,90 @@
+{
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "type": "AdaptiveCard",
+  "version": "1.2",
+  "body": [
+    {
+      "type": "Container",
+      "items": [
+        {
+          "type": "TextBlock",
+          "text": "❌ Step Function Failed!",
+          "weight": "Bolder",
+          "size": "Large"
+        },
+        {
+          "type": "ColumnSet",
+          "columns": [
+            {
+              "type": "Column",
+              "width": "auto",
+              "items": [
+                {
+                  "type": "Image",
+                  "url": "shared-assets/logos/logo.png",
+                  "altText": "Logo",
+                  "size": "small",
+                  "style": "company"
+                }
+              ]
+            },
+            {
+              "type": "Column",
+              "width": "stretch",
+              "items": [
+                {
+                  "type": "TextBlock",
+                  "text": "text",
+                  "weight": "bolder",
+                  "wrap": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "FactSet",
+          "facts": [
+            {
+              "title": "Workflow:",
+              "value": "{{workflow_name}}"
+            },
+            {
+              "title": "Execution ID:",
+              "value": "{{execution_id}}"
+            },
+            {
+              "title": "Timestamp:",
+              "value": "{{timestamp}}"
+            }
+          ]
+        },
+        {
+          "type": "TextBlock",
+          "text": "{{details}}",
+          "wrap": true
+        }
+      ]
+    }
+  ],
+  "actions": [
+    {
+      "type": "Action.OpenUrl",
+      "title": "Go to ",
+      "url": "https://example.com/"
+    },{
+      "type": "Action.OpenUrl",
+      "title": "View Workflow",
+      "url": "{{workflow_url}}"
+    },
+    {
+      "type": "Action.OpenUrl",
+      "title": "View Execution",
+      "url": "{{execution_url}}"
+    }
+  ],
+  "backgroundImage": {
+    "url": "shared-assets/solid_backgrounds/950x350-boston-university-red-solid-color-background.jpg",
+    "fillMode": "Repeat"
+  }
+}
